@@ -1,17 +1,17 @@
-
+import SidebarContainer from "../components/sidebarContainer"
 
 function Home() {
-    const onLogout = () => localStorage.removeItem('isLoggedIn')
+
+
     return (
-        <div>
-            <button onClick={onLogout}>Logout</button>
-            <p>Hello how are you</p>
-            <p>Hello how are you</p>
-            <p>Hello how are you</p>
-            <p>Hello how are you</p>
-            <p>Hello how are you</p>
-        </div>
+        <SidebarContainer>
+            <div className="bg-blue-500">
+                <p>Hello there</p>
+                <p>Hello there</p>
+                <p>Hello there</p>
+                <p>Hello there</p>
+            </div>
+        </SidebarContainer>
     )
 }
-
 export default Home
