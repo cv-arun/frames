@@ -1,5 +1,6 @@
 import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { newFolder } from "../services/folderServices";
 
 function SidebarContainer({ children }) {
     const navigate = useNavigate()
@@ -7,11 +8,19 @@ function SidebarContainer({ children }) {
         localStorage.removeItem('isLoggedIn')
         navigate('/login')
     }
+
+    const add = () => {
+        newFolder({
+            name: 'sample folder',
+            parent: '65c8f294babaf34d852186b4'
+        })
+    }
+
     return (
         <div className="h-full min-h-[100vh] bg-[#f8fafd] flex">
             <div className=" w-[20%] pl-10 text-black flex flex-col " >
                 <h1 className="text-2xl mt-5">Frames</h1>
-                <div className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div>
+                <div onClick={add} className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div>
                 <div className="mt-5 grow  flex flex-col gap-2 ">
                     <div className="cursor-pointer">Home</div>
                     <div className="cursor-pointer">All Images</div>
