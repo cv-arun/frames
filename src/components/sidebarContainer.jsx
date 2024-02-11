@@ -1,19 +1,25 @@
+import { FaPlus } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 function SidebarContainer({ children }) {
-    const onLogout = () => localStorage.removeItem('isLoggedIn')
+    const navigate = useNavigate()
+    const onLogout = () => {
+        localStorage.removeItem('isLoggedIn')
+        navigate('/login')
+    }
     return (
         <div className="h-full min-h-[100vh] bg-[#f8fafd] flex">
             <div className=" w-[20%] pl-10 text-black flex flex-col " >
                 <h1 className="text-2xl mt-5">Frames</h1>
-                <div className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl " ><span className="text-3xl">+</span>Add</div>
-                <div className="mt-5 grow  flex flex-col gap-2">
-                    <div>Home</div>
-                    <div>All Images</div>
-                    <div>Starred</div>
-                    <div>Bin</div>
-                    <div>Storage</div>
+                <div className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div>
+                <div className="mt-5 grow  flex flex-col gap-2 ">
+                    <div className="cursor-pointer">Home</div>
+                    <div className="cursor-pointer">All Images</div>
+                    <div className="cursor-pointer">Starred</div>
+                    <div className="cursor-pointer">Bin</div>
+                    <div className="cursor-pointer">Storage</div>
                     <div className="grow flex flex-col-reverse py-5">
-                        <div onClick={onLogout} >Logout</div>
+                        <div onClick={onLogout} className="cursor-pointer">Logout</div>
                     </div>
                 </div>
             </div>
@@ -23,7 +29,7 @@ function SidebarContainer({ children }) {
                         <input className="w-full bg-inherit" placeholder="Search" />
                     </div>
                 </div>
-                <div className="rounded-tl-3xl h-full bg-white overflow-hidden ">{children}</div>
+                <div className="rounded-tl-3xl h-full bg-[#949494] overflow-hidden text-white ">{children}</div>
             </div>
         </div>
     )
