@@ -1,7 +1,13 @@
 import axios from "axios";
 
 export const newFolder = async (payload) => {
-    await axios.post('http://localhost:4000/api/folder/new-folder', payload)
+    try {
+
+        await axios.post('http://localhost:4000/api/folder/new-folder', payload)
+        return true
+    } catch {
+        return false
+    }
 }
 
 export const getFolderById = async (payload) => {
