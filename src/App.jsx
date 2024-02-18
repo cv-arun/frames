@@ -11,13 +11,13 @@ import Login from './pages/login';
 import Signup from "./pages/signup";
 
 const PublicRoute = ({ Component }) => {
-  const isAuthenticated = localStorage.getItem('isLoggedIn')
+  const isAuthenticated = localStorage.getItem('auth')
   return !isAuthenticated ? <Component /> : <Navigate to="/" />
 }
 
 
 const PrivateRoute =  ({ Component }) => {
-  const isAuthenticated = localStorage.getItem('isLoggedIn')
+  const isAuthenticated = localStorage.getItem('auth')
   return isAuthenticated ? <Component /> : <Navigate to="/login" />
 }
 

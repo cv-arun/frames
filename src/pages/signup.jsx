@@ -1,16 +1,20 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react";
+import { signup } from "../services/userServices";
 
 
 function Signup() {
     const navigate = useNavigate()
-    const [userData, setUserData] = useState({name:'hello'});
-    const handleSignup = () => {
+    const [userData, setUserData] = useState({});
+    const handleSignup =async () => {
         // localStorage.setItem('isLoggedIn', true)
         // navigate('/login')
         if(userData.password!==userData.cpassword){
             return alert('password and confirm password donot match')
         }
+        delete userData.cpassword
+        await signup(userData)
+        navigate('/login')
     }
 
     const handleData = (e) => {

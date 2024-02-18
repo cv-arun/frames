@@ -23,14 +23,21 @@ function Home() {
 
 
     useEffect(() => {
-        fetchFolders('65c8f294babaf34d852186b4')
+        fetchFolders()
     }, [])
 
     const fetchFolders = async (id) => {
-        let data = await getFolderById(id)
-        setFolder(data?.folder[0])
-        setChildFolders(data?.children)
-        console.log(data)
+        try {
+
+            let data = await getFolderById(id)
+            setFolder(data?.folder)
+            setChildFolders(data?.children)
+            console.log(data)
+        } catch (err) {
+            setFolder({})
+            setChildFolders([])
+            console.log(err)
+        }
     }
 
     const openFolder = (id) => {

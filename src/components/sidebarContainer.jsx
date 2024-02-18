@@ -9,7 +9,7 @@ function SidebarContainer({ children, folderId,refetch }) {
 
     const navigate = useNavigate()
     const onLogout = () => {
-        localStorage.removeItem('isLoggedIn')
+        localStorage.removeItem('auth')
         navigate('/login')
     }
 
