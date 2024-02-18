@@ -45,7 +45,7 @@ function Home() {
 
     return (
         <SidebarContainer folderId={folder._id} refetch={fetchFolders}>
-            <div className=" p-5 flex items-baseline ">
+            <div className="flex items-baseline ">
                 <IoIosArrowBack onClick={goBack} size={30} />
                 <h1 className="text-[40px]">{folder.name}</h1>
             </div>

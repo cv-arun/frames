@@ -8,6 +8,7 @@ import {
 // import PrivateRoute from './Routes/privetRoute';
 import Home from './pages/home';
 import Login from './pages/login';
+import Signup from "./pages/signup";
 
 const PublicRoute = ({ Component }) => {
   const isAuthenticated = localStorage.getItem('isLoggedIn')
@@ -32,6 +33,10 @@ const App = () => {
     {
       path: "/login",
       element: <PublicRoute Component={Login} />,
+    },
+    {
+      path: "/signup",
+      element: <PublicRoute Component={Signup} />,
     },
   ]);
   return (

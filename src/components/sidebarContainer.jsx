@@ -48,7 +48,7 @@ function SidebarContainer({ children, folderId,refetch }) {
                         <input className="w-full bg-inherit" placeholder="Search" />
                     </div>
                 </div>
-                <div className="rounded-tl-3xl h-full bg-[#949494] overflow-hidden text-white ">{children}</div>
+                <div className="rounded-tl-3xl h-full bg-[#949494] overflow-hidden text-white p-10">{children}</div>
             </div>
            {modal && <div className="flex flex-col justify-around w-[300px] h-[200px] p-5 fixed mx-auto mt-[50vh] ml-[50vw] bg-white text-black rounded-md shadow-lg -translate-y-[50%] -translate-x-[50%]">
                 <p className="text-[26px]">New folder</p>
