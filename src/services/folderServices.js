@@ -12,7 +12,7 @@ export const newFolder = async (payload) => {
 }
 
 export const getFolderById = async (payload) => {
-    try {
+
         let rootfolder = false
         if (!payload) {
             rootfolder = true
@@ -20,7 +20,5 @@ export const getFolderById = async (payload) => {
         let token = JSON.parse(localStorage.getItem('auth'))
         let data = await axios.get(`${BASE_URL}/folders/${payload}/${rootfolder}`, { headers: { authorization: `bearer ${token}` } });
         return data?.data
-    } catch (error) {
-        console.log(error)
-    }
+  
 }

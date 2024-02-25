@@ -1,15 +1,19 @@
 import SidebarContainer from "../components/sidebarContainer";
 import { FaFolder } from "react-icons/fa";
 import { getFolderById } from "../services/folderServices";
+import { getImages } from "../services/imageService";
 import { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
 
 
     const [childFolders, setChildFolders] = useState([])
     const [folder, setFolder] = useState({})
-    const [stack, setStack] = useState(['65c8f294babaf34d852186b4'])
+    const [stack, setStack] = useState([])
+    const [images, setImages] = useState([])
+    const navigate = useNavigate()
 
 
     const stackPush = (folder) => {
@@ -32,12 +36,22 @@ function Home() {
             let data = await getFolderById(id)
             setFolder(data?.folder)
             setChildFolders(data?.children)
+            fetchImages()
+
             console.log(data)
         } catch (err) {
             setFolder({})
             setChildFolders([])
-            console.log(err)
+            if (err.response.status === 401) {
+                localStorage.removeItem('auth')
+                navigate('/login')
+            }
         }
+    }
+
+    const fetchImages = async () => {
+        let images = await getImages(folder._id)
+        setImages(images)
     }
 
     const openFolder = (id) => {
@@ -53,7 +67,7 @@ function Home() {
     return (
         <SidebarContainer folderId={folder._id} refetch={fetchFolders}>
             <div className="flex items-baseline ">
-                <IoIosArrowBack onClick={goBack} size={30} />
+                {stack.length >= 1 ? <IoIosArrowBack className="cursor-pointer" onClick={goBack} size={30} /> : null}
                 <h1 className="text-[40px]">{folder.name}</h1>
             </div>
             <hr />
@@ -64,6 +78,7 @@ function Home() {
                         <p>{f.name}</p>
                     </div>
                 </div>)}
+                {images.map((img) => <div key={img.uri}><img src={img.uri} alt="img" /></div>)}
             </div>
         </SidebarContainer>
     )
