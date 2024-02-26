@@ -77,7 +77,7 @@ function Home() {
                         <p>{f.name}</p>
                     </div>
                 </div>)}
-                {images.map((img) => <div className="w-[120px] h-[120px] flex flex-col justify-center items-center" key={img.uri}><img className="object-contain"  src={img.uri} alt="img" /></div>)}
+                {images.map((img) => <div className="w-[120px] h-[120px] flex flex-col justify-center items-center p-2" key={img.uri}><img className="object-contain"  src={img.uri} alt="img" /></div>)}
             </div>
         </SidebarContainer>
     )

@@ -1,13 +1,14 @@
-import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { newFolder } from "../services/folderServices";
 import { uploadImage } from "../services/imageService";
 import { useState } from "react";
+import { BiImageAdd } from "react-icons/bi";
+import { TiFolderAdd } from "react-icons/ti";
 
 function SidebarContainer({ children, folderId, refetch }) {
     const [folderName, setFolderName] = useState('New folder');
     const [modal, setModal] = useState(false);
-    const [image, setImage] = useState(null)
+    // const [image, setImage] = useState(null)
 
     const navigate = useNavigate()
     const onLogout = () => {
@@ -27,28 +28,31 @@ function SidebarContainer({ children, folderId, refetch }) {
         }
 
     }
-    const handleFileChange = (e) => {
-        setImage(e.target.files[0])
-    }
-
-    const handleUploadImage=async()=>{
+    const handleFileChange = async (e) => {
+        // setImage(e.target.files[0])
+        if (!e.target?.files[0]) return null
         const formData = new FormData()
-        formData.append('photos',image)
-        formData.append('folderId',folderId)
-
+        formData.append('photos', e.target.files[0])
+        formData.append('folderId', folderId)
         await uploadImage(formData)
-
     }
+
+
 
     return (
         <div className="h-full min-h-[100vh] bg-[#f8fafd] flex">
             <div className=" w-[20%] pl-10 text-black flex flex-col " >
                 <h1 className="text-2xl mt-5">Frames</h1>
-                <div onClick={() => setModal(true)} className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div>
+                {/* <div onClick={() => setModal(true)} className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div> */}
                 <div className="mt-5 grow  flex flex-col gap-2 ">
-                    <div>
-                        <input type="file" onChange={handleFileChange} />
-                        <button onClick={handleUploadImage} > Upload</button>
+                    <div className="flex gap-5 mb-10">
+                        <div className=" overflow-hidden w-[50px] h-[50px] cursor-pointer">
+                            <input className="opacity-0 absolute w-[50px] h-[50px] cursor-pointer " type="file" onChange={handleFileChange} />
+                            <BiImageAdd size={50} />
+                        </div>
+                        <div onClick={() => setModal(true)} className=" overflow-hidden w-[50px] h-[50px] cursor-pointer">
+                            <TiFolderAdd size={50} />
+                        </div>
                     </div>
                     <div className="cursor-pointer">Home</div>
                     <div className="cursor-pointer">All Images</div>
