@@ -70,14 +70,20 @@ function Home() {
                 <h1 className="text-[40px]">{folder.name}</h1>
             </div>
             <hr />
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap pt-5 overflow-y-auto h-full">
                 {childFolders.map(f => <div key={f._id} onClick={() => openFolder(f._id)} className="w-[120px] h-[120px] flex justify-center items-center" >
                     <div className="w-fit cursor-pointer ">
                         <FaFolder fontSize={70} color="#5f6368" />
                         <p>{f.name}</p>
                     </div>
                 </div>)}
-                {images.map((img) => <div className="w-[120px] h-[120px] flex flex-col justify-center items-center p-2" key={img.uri}><img className="object-contain"  src={img.uri} alt="img" /></div>)}
+                {images.length ?
+                    images.map((img) =>
+                        <div className="w-[120px] h-[120px] max-h-[120px] flex flex-col justify-center items-center p-2 overflow-hidden" key={img.uri}>
+                            <img className="object-cover w-full h-full" src={img.uri} alt="img" />
+                        </div>)
+                    : ''
+                }
             </div>
         </SidebarContainer>
     )
