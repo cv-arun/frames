@@ -1,6 +1,7 @@
 import axios from "axios";
+import { baseUrl } from "./axios";
 
-const BASE_URL = 'http://localhost:4000/api/folder'
+const BASE_URL = `${baseUrl}/folder`
 
 export const uploadImage = async (payload) => {
     try {

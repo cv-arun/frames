@@ -1,0 +1,1 @@
+export const baseUrl=`https://real-jade-frog-shoe.cyclic.app/api`
