@@ -1,13 +1,18 @@
-import { FaPlus } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { newFolder } from "../services/folderServices";
 import { uploadImage } from "../services/imageService";
 import { useState } from "react";
+import { BiImageAdd } from "react-icons/bi";
+import { TiFolderAdd } from "react-icons/ti";
+import { GoHome } from "react-icons/go";
+import { IoMdImages } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function SidebarContainer({ children, folderId, refetch }) {
     const [folderName, setFolderName] = useState('New folder');
     const [modal, setModal] = useState(false);
-    const [image, setImage] = useState(null)
+    const [mobSideBar, setMobSideBar] = useState(false)
+    // const [image, setImage] = useState(null)
 
     const navigate = useNavigate()
     const onLogout = () => {
@@ -27,28 +32,31 @@ function SidebarContainer({ children, folderId, refetch }) {
         }
 
     }
-    const handleFileChange = (e) => {
-        setImage(e.target.files[0])
-    }
-
-    const handleUploadImage=async()=>{
+    const handleFileChange = async (e) => {
+        // setImage(e.target.files[0])
+        if (!e.target?.files[0]) return null
         const formData = new FormData()
-        formData.append('photos',image)
-        formData.append('folderId',folderId)
-
+        formData.append('photos', e.target.files[0])
+        formData.append('folderId', folderId)
         await uploadImage(formData)
-
     }
+
+
 
     return (
-        <div className="h-full min-h-[100vh] bg-[#f8fafd] flex">
-            <div className=" w-[20%] pl-10 text-black flex flex-col " >
+        <div className=" min-h-[100vh] h-[100vh] max-h-[100vh] bg-[#f8fafd] flex overflow-y-hidden">
+            <div className=" w-[20%] pl-10 text-black md:flex flex-col  hidden h-[100vh] " >
                 <h1 className="text-2xl mt-5">Frames</h1>
-                <div onClick={() => setModal(true)} className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div>
+                {/* <div onClick={() => setModal(true)} className="text-md p-4 w-fit shadow-xl bg-white mt-10 rounded-xl flex items-center gap-3 cursor-pointer" ><span className="text-3xl"><FaPlus /></span>Add</div> */}
                 <div className="mt-5 grow  flex flex-col gap-2 ">
-                    <div>
-                        <input type="file" onChange={handleFileChange} />
-                        <button onClick={handleUploadImage} > Upload</button>
+                    <div className="flex gap-5 mb-10">
+                        <div className=" overflow-hidden w-[50px] h-[50px] cursor-pointer">
+                            <input className="opacity-0 absolute w-[50px] h-[50px] cursor-pointer " type="file" onChange={handleFileChange} />
+                            <BiImageAdd size={50} />
+                        </div>
+                        <div onClick={() => setModal(true)} className=" overflow-hidden w-[50px] h-[50px] cursor-pointer">
+                            <TiFolderAdd size={50} />
+                        </div>
                     </div>
                     <div className="cursor-pointer">Home</div>
                     <div className="cursor-pointer">All Images</div>
@@ -60,13 +68,49 @@ function SidebarContainer({ children, folderId, refetch }) {
                     </div>
                 </div>
             </div>
-            <div className=" w-[80%] flex flex-col ">
-                <div className="w-full h-[60px] bg-[#f8fafd] flex flex-col justify-center">
+            <div className=" md:w-[80%] w-[100%] flex flex-col h-full ">
+                <div className="w-full h-[60px] bg-[#f8fafd] flex items-center gap-5">
+                    <GiHamburgerMenu onClick={() => setMobSideBar(true)} size={30} className="md:hidden ml-5" color="black" />
                     <div className="bg-[#e9eef6] w-[60%] h-[40px] flex items-center rounded-3xl overflow-hidden px-5 ">
                         <input className="w-full bg-inherit" placeholder="Search" />
                     </div>
                 </div>
-                <div className="rounded-tl-3xl h-full bg-[#949494] overflow-hidden text-white p-10">{children}</div>
+                <div className="md:rounded-tl-3xl h-full rounded-none bg-[#949494] overflow-hidden text-white md:p-10 p-2 ">
+                    {children}
+                </div>
+
+                {/* mobile bottom bar */}
+                <div className=" md:hidden bg-white shadow-sm flex justify-around py-4 text-black rounded-t-md overflow-hidden">
+                    <div className=" overflow-hidden  h-[30px] cursor-pointer">
+                        <GoHome size={30} />
+                    </div>
+                    <div className=" overflow-hidden h-[30px] cursor-pointer">
+                        <IoMdImages size={30} />
+                    </div>
+                    <div className=" overflow-hidden w-[30px] h-[30px] cursor-pointer">
+                        <input className="opacity-0 absolute w-[30px] h-[30px] cursor-pointer " type="file" onChange={handleFileChange} />
+                        <BiImageAdd size={30} />
+                    </div>
+                    <div onClick={() => setModal(true)} className=" overflow-hidden w-[30px] h-[30px] cursor-pointer">
+                        <TiFolderAdd size={30} />
+                    </div>
+                </div>
+
+                {/* mobile sidbar */}
+                {mobSideBar && <div className=" w-full z-50 flex flex-row absolute h-full shadow-xl bg-[#00000057]">
+                    <div className=" top-0 left-0  w-[50%] h-full bg-white text-black pl-4 flex flex-col gap-4">
+                        <h1 className="text-2xl mt-5 mb-10 ">Frames</h1>
+                        <div className="cursor-pointer">Starred</div>
+                        <div className="cursor-pointer">Bin</div>
+                        <div className="cursor-pointer">Storage</div>
+                        <div className="grow flex flex-col-reverse mb-10">
+                            <div onClick={onLogout} className="cursor-pointer mb-10">Logout</div>
+                        </div>
+                    </div>
+                    <div className="w-[50%] " onClick={() => setMobSideBar(false)}>
+
+                    </div>
+                </div>}
             </div>
             {modal && <div className="flex flex-col justify-around w-[300px] h-[200px] p-5 fixed mx-auto mt-[50vh] ml-[50vw] bg-white text-black rounded-md shadow-lg -translate-y-[50%] -translate-x-[50%]">
                 <p className="text-[26px]">New folder</p>
@@ -75,7 +119,6 @@ function SidebarContainer({ children, folderId, refetch }) {
                     <button onClick={() => setModal(false)}>Cancel</button>
                     <button onClick={() => add()}>Create</button>
                 </div>
-
             </div>}
         </div>
     )
