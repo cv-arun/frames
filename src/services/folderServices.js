@@ -1,5 +1,6 @@
 import axios from "axios";
-const BASE_URL = 'http://localhost:4000/api/folder'
+import { baseUrl } from "./axios";
+const BASE_URL = `${baseUrl}/folder`
 
 export const newFolder = async (payload) => {
     try {

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { baseUrl } from "./axios";
 
-const BASE_URL = 'http://localhost:4000/api/user'
+const BASE_URL = `${baseUrl}/user`
 
 export const signup = async (payload) => {
     try {
