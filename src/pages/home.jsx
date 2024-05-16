@@ -59,14 +59,14 @@ function Home() {
     }
 
     const goBack = () => {
-        fetchFolders(stack[stack.length - 2])
+        fetchFolders(stack[stack?.length - 2])
         stackPop()
     }
 
     return (
         <SidebarContainer folderId={folder._id} refetch={fetchFolders}>
             <div className="flex items-baseline ">
-                {stack.length >= 1 ? <IoIosArrowBack className="cursor-pointer" onClick={goBack} size={30} /> : null}
+                {stack?.length >= 1 ? <IoIosArrowBack className="cursor-pointer" onClick={goBack} size={30} /> : null}
                 <h1 className="text-[40px]">{folder.name}</h1>
             </div>
             <hr />
@@ -77,7 +77,7 @@ function Home() {
                         <p>{f.name}</p>
                     </div>
                 </div>)}
-                {images.length ?
+                {images?.length ?
                     images.map((img) =>
                         <div className="w-[120px] h-[120px] max-h-[120px] flex flex-col justify-center items-center p-2 overflow-hidden" key={img.uri}>
                             <img className="object-cover w-full h-full" src={img.uri} alt="img" />
